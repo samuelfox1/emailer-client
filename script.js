@@ -1,6 +1,7 @@
 const select = (selector) => document.querySelector(selector)
 const formEl = select('form')
-const addressEl = select('input[name=myEmail]')
+const addressEl = select('input[name=destination]')
+const subjectEl = select('input[name=subject]')
 const textareaEl = select('textarea')
 
 formEl.addEventListener('submit', (e) => {
@@ -8,10 +9,13 @@ formEl.addEventListener('submit', (e) => {
 
     const destination = addressEl.value
     const renderAs = e.submitter.dataset.format
-    const subject = 'hello from https://samuelfox1.github.io/emailer-client/'
-    const body = `${textareaEl.value} \n\n ${subject}`
+    const subject = subjectEl.value
+    const body = `${textareaEl.value}
+    
+    sent from <a href='https://samuelfox1.github.io/emailer-client/'>emailer-client</a>
+     `
 
-    if (!renderAs || !destination || !body) return
+    if (!renderAs || !destination || !subject || !body) return
 
     const url = 'https://sf-emailer.herokuapp.com/api/email'
 
