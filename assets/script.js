@@ -12,7 +12,7 @@ let interval;
 
 const collectFormInputs = (e) => {
     const destination = addressEl.value;
-    const renderAs = e.submitter.dataset.format;
+    const renderAs = e.target.dataset.format;
     const subject = subjectEl.value;
     const body = `${textareaEl.value}
     
@@ -70,6 +70,7 @@ const toggleWaitingMessage = (display, message) => {
 
 const handleFormSubmit = (e) => {
     e.preventDefault();
+    if (!e.target.dataset?.format) return
 
     const inputs = collectFormInputs(e);
 
@@ -80,4 +81,4 @@ const handleFormSubmit = (e) => {
     sendEmail(inputs);
 };
 
-formEl.addEventListener('submit', handleFormSubmit);
+formEl.addEventListener('click', handleFormSubmit);
