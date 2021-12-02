@@ -6,17 +6,21 @@ const textareaEl = select('textarea')
 formEl.addEventListener('submit', (e) => {
     e.preventDefault()
 
+    const destionation = addressEl.value
     const action = e.submitter.dataset.format
-    const emailAddress = addressEl.value
-    const emailBody = textareaEl.value
+    const subject = 'hello from https://samuelfox1.github.io/emailer-client/'
+    const body = `${textareaEl.value} \n\n ${subject}`
 
-    if (!action || !emailAddress || !emailBody) return
+    if (!action || !destionation || !body) return
 
     const url = 'https://sf-emailer.herokuapp.com/api/email'
 
     fetch(url, {
         method: 'POST',
-        body: '',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ destionation, action, subject, body }),
     })
         .then(response => response.json())
         .then(data => console.log(data))
